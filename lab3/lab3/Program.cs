@@ -5,6 +5,7 @@ namespace lab3
 {
     public class Q<T>
     {
+        private Owner own = new Owner();
         private List<T> q;
 
         public Q()
@@ -14,6 +15,7 @@ namespace lab3
             };
         }
 
+        public Owner GetOwner => this.own;
         public List<T> queue => this.q;
 
         public static implicit operator int(Q<T> q1)
@@ -73,6 +75,27 @@ namespace lab3
                 Console.WriteLine(x);
             }
         }
+
+        public class Owner
+        {
+            private readonly int id;
+            private string name;
+
+            public Owner()
+            {
+                Random random = new Random();
+                this.id = random.Next(100);
+                this.name = "Damege, Inc.";
+            }
+
+            public string DefaultName => this.name;
+            public int Id => this.id;
+
+            public string NewName(string value)
+            {
+                return this.name = value;
+            }
+        }
     }
 
     internal class Program
@@ -112,6 +135,9 @@ namespace lab3
             Q<byte> q5 = new Q<byte>();
             q5.AddElement(3);
             _ = (int)q5;
+
+            Q<byte>.Owner owning = q5.GetOwner;
+            Console.WriteLine("Owner: " + owning.DefaultName + ",\nId:" + owning.Id);
         }
     }
 }
