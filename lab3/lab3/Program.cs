@@ -3,6 +3,80 @@ using System.Collections.Generic;
 
 namespace lab3
 {
+    public static class StatisticOperation
+    {
+        private static int qLength;
+
+        static StatisticOperation()
+        {
+            qLength = 0;
+        }
+
+        public static int GetDif(Q<int> q1)
+        {
+            int max = getMax(q1);
+            int min = getMin(q1);
+            return max - min;
+        }
+
+        public static int GetFirstPoint(this Q<string> q1)
+        {
+            int i = 0;
+            foreach (string x in q1.queue)
+            {
+                i++;
+                if (x == ".")
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public static string GetFLastStringElement(this Q<string> q1)
+        {
+            return q1.queue[q1.queue.Count - 1];
+        }
+
+        public static int GetLength(Q<int> q1)
+        {
+            return qLength = q1.queue.Count;
+        }
+
+        public static int GetSum(Q<int> q1)
+        {
+            int max = getMax(q1);
+            int min = getMin(q1);
+            return max + min;
+        }
+
+        private static int getMax(Q<int> q1)
+        {
+            int max = q1.queue[0];
+            foreach (int x in q1.queue)
+            {
+                if (x > max)
+                {
+                    max = x;
+                }
+            }
+            return max;
+        }
+
+        private static int getMin(Q<int> q1)
+        {
+            int min = q1.queue[0];
+            foreach (int x in q1.queue)
+            {
+                if (x < min)
+                {
+                    min = x;
+                }
+            }
+            return min;
+        }
+    }
+
     public class Q<T>
     {
         private Owner own = new Owner();
@@ -76,6 +150,18 @@ namespace lab3
             }
         }
 
+        public class Date
+        {
+            private DateTime dat;
+
+            public Date()
+            {
+                this.dat = DateTime.Now;
+            }
+
+            public DateTime date => this.dat;
+        }
+
         public class Owner
         {
             private readonly int id;
@@ -134,10 +220,20 @@ namespace lab3
             }
             Q<byte> q5 = new Q<byte>();
             q5.AddElement(3);
-            _ = (int)q5;
+            int q5Length = (int)q5;
+            Console.WriteLine("q5 length: " + q5Length);
 
             Q<byte>.Owner owning = q5.GetOwner;
             Console.WriteLine("Owner: " + owning.DefaultName + ",\nId:" + owning.Id);
+            Console.WriteLine("StatisticOperation: sum = " + StatisticOperation.GetSum(q3));
+            Console.WriteLine("StatisticOperation: sub = " + StatisticOperation.GetDif(q3));
+            Console.WriteLine("StatisticOperation: sub = " + StatisticOperation.GetDif(q3));
+            Console.WriteLine("StatisticOperation: length = " + StatisticOperation.GetLength(q3));
+            Q<string> q6 = new Q<string>();
+            q6.AddElement("aboba");
+            q6.AddElement(".");
+            Console.WriteLine("StatisticOperation: first point index: " + StatisticOperation.GetFirstPoint(q6));
+            Console.WriteLine("StatisticOperation: last string element: " + StatisticOperation.GetFLastStringElement(q6));
         }
     }
 }
